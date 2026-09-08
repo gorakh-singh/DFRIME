@@ -1,0 +1,1035 @@
+{
+  "staticBuild": true,
+  "builtAt": "2026-09-08T03:56:50.381Z",
+  "provider": {
+    "name": "Rime",
+    "endpoint": "https://users.rime.ai/v1/rime-tts",
+    "fallbackConfigured": false,
+    "keyPresent": false,
+    "liveAvailable": false,
+    "liveDisabledReason": "This is a static deployment with no server behind it, so there is nothing to hold the Rime API key and nothing to proxy a live call through. Putting the key in the page would publish it. Every clip below is a stored render with its real timestamp. To make live calls, run the project locally or deploy it to a Node host. See DEPLOY.md."
+  },
+  "tracks": {
+    "en-US": {
+      "track": "en-US",
+      "label": "US English",
+      "modelId": "mistv2",
+      "speaker": "summit",
+      "lang": "eng",
+      "preferenceRank": 1,
+      "preferenceList": [
+        "summit",
+        "peak",
+        "talon",
+        "moraine",
+        "lagoon"
+      ],
+      "techniques": [
+        "normalizer-format",
+        "spell()",
+        "phoneme",
+        "expand",
+        "pacing"
+      ],
+      "why": "Mist v2 is the only model carrying the text normalizer, spell() and phonemizeBetweenBrackets at once, which is the full toolkit for a pronunciation brief.",
+      "detail": {
+        "speaker": "summit",
+        "gender": "Male",
+        "age": "Adult",
+        "country": "US",
+        "dialect": "Standard",
+        "demographic": "White",
+        "genre": [
+          "Customer Support"
+        ],
+        "modelId": "mistv2",
+        "lang": "eng",
+        "language": "English",
+        "description": "A friendly, professional American male voice, warm and polished.",
+        "flagship": true
+      },
+      "catalogSpeakerCount": 123,
+      "renderOptions": {
+        "modelId": "mistv2",
+        "lang": "eng",
+        "samplingRate": 24000,
+        "speedAlpha": 1,
+        "reduceLatency": false,
+        "phonemizeBetweenBrackets": true
+      }
+    },
+    "en-IN": {
+      "track": "en-IN",
+      "label": "Indian English",
+      "modelId": "mistv2",
+      "speaker": "ritu",
+      "lang": "eng",
+      "preferenceRank": 1,
+      "preferenceList": [
+        "ritu",
+        "rohan",
+        "ironwood",
+        "hawk"
+      ],
+      "techniques": [
+        "normalizer-format",
+        "spell()",
+        "phoneme",
+        "expand",
+        "pacing"
+      ],
+      "why": "The common real deployment is an Indian business calling Indian customers with an English voice. Mist v2 carries Indian-accent English speakers, so this track keeps the full toolkit while changing the data to Indian names, mobile numbers, addresses and tax identifiers.",
+      "detail": {
+        "speaker": "ritu",
+        "gender": "Female",
+        "age": "Adult",
+        "country": "US",
+        "dialect": "Indian",
+        "demographic": "Indian",
+        "genre": [
+          "General"
+        ],
+        "modelId": "mistv2",
+        "lang": "eng",
+        "language": "English",
+        "description": "A smart, serious Indian female voice, measured and steady.",
+        "flagship": false
+      },
+      "catalogSpeakerCount": 123,
+      "renderOptions": {
+        "modelId": "mistv2",
+        "lang": "eng",
+        "samplingRate": 24000,
+        "speedAlpha": 1,
+        "reduceLatency": false,
+        "phonemizeBetweenBrackets": true
+      }
+    },
+    "hi-IN": {
+      "track": "hi-IN",
+      "label": "Hindi",
+      "modelId": "arcana",
+      "speaker": "anaya",
+      "lang": "hin",
+      "preferenceRank": 1,
+      "preferenceList": [
+        "anaya",
+        "arya",
+        "anil"
+      ],
+      "techniques": [
+        "normalizer-format",
+        "spell()",
+        "expand",
+        "pacing"
+      ],
+      "why": "Hindi is not offered on Mist v2, so a different model is required. Arcana was chosen over Coda because Coda reads spell() aloud as a word instead of honouring it, which was measured, and spell() is the control that reference codes depend on. Phoneme brackets have no effect on Arcana, so this track has a genuinely smaller toolkit and its fixtures are built only from mechanisms that were verified to work.",
+      "detail": {
+        "speaker": "anaya",
+        "gender": "Female",
+        "age": "Adult",
+        "country": "India",
+        "dialect": "India",
+        "demographic": "Indian",
+        "genre": [],
+        "modelId": "arcana",
+        "lang": "hin",
+        "language": "Hindi",
+        "description": "A polished Indian female voice, clear and professional.",
+        "flagship": true
+      },
+      "catalogSpeakerCount": 3,
+      "renderOptions": {
+        "modelId": "arcana",
+        "lang": "hin",
+        "samplingRate": 24000,
+        "speedAlpha": 1,
+        "reduceLatency": false,
+        "phonemizeBetweenBrackets": false
+      }
+    }
+  },
+  "defaultTrack": "en-US",
+  "catalog": {
+    "fetchedAt": "2026-09-08T03:45:38.049Z",
+    "sources": {
+      "voicesByModel": "https://users.rime.ai/data/voices/all-v2.json",
+      "voiceDetails": "https://users.rime.ai/data/voices/voice_details.json"
+    },
+    "models": [
+      "mist",
+      "mistv2",
+      "arcana",
+      "mistv3",
+      "coda"
+    ],
+    "languages": {
+      "eng": 694,
+      "ger": 25,
+      "por": 17,
+      "fra": 21,
+      "hin": 5,
+      "spa": 71,
+      "heb": 2,
+      "ara": 10,
+      "jpn": 16,
+      "ita": 2
+    },
+    "voiceRecordCount": 863
+  },
+  "audio": {
+    "accept": "audio/wav",
+    "extension": "wav",
+    "samplingRate": 24000,
+    "upstream": "headerless 16-bit little-endian linear PCM, mono, chunked",
+    "container": "RIFF WAVE added locally around Rime’s PCM samples"
+  },
+  "snapshotError": null,
+  "manifest": {
+    "generatedAt": "2026-09-08T03:50:01.354Z",
+    "partialRun": null
+  },
+  "controls": {
+    "en-US": {
+      "track": "en-US",
+      "voice": "mistv2/summit/eng",
+      "noiseFloor": {
+        "controlText": "Hi Siobhán Doheny, your Thursday appointment is confirmed.",
+        "repeats": 4,
+        "deterministic": false,
+        "distinctShas": 4,
+        "minMs": 3135,
+        "maxMs": 3355,
+        "spreadMs": 220
+      },
+      "phonemeControl": {
+        "probe": "Hello {S0Iv1an}, your order is ready.",
+        "onDurationMs": 2009,
+        "offDurationMs": 3123,
+        "ratio": 1.555,
+        "engaging": true,
+        "claimedByTrack": true,
+        "agreesWithClaim": true
+      },
+      "spellControl": {
+        "withSpell": "Your code is spell(PNR4472).",
+        "spacedOut": "Your code is P N R 4 4 7 2.",
+        "spellDurationMs": 3088,
+        "spacedDurationMs": 2763,
+        "ratio": 1.118,
+        "honoured": true,
+        "claimedByTrack": true,
+        "agreesWithClaim": true
+      }
+    },
+    "en-IN": {
+      "track": "en-IN",
+      "voice": "mistv2/ritu/eng",
+      "noiseFloor": {
+        "controlText": "Good morning Venkataraman Krishnamurthy, your policy renewal is due.",
+        "repeats": 4,
+        "deterministic": false,
+        "distinctShas": 4,
+        "minMs": 3727,
+        "maxMs": 4122,
+        "spreadMs": 395
+      },
+      "phonemeControl": {
+        "probe": "Hello {v2Enk0xt1arxm0xn}, your order is ready.",
+        "onDurationMs": 2635,
+        "offDurationMs": 4598,
+        "ratio": 1.745,
+        "engaging": true,
+        "claimedByTrack": true,
+        "agreesWithClaim": true
+      },
+      "spellControl": {
+        "withSpell": "Your code is spell(PNR4472).",
+        "spacedOut": "Your code is P N R 4 4 7 2.",
+        "spellDurationMs": 2519,
+        "spacedDurationMs": 2287,
+        "ratio": 1.101,
+        "honoured": true,
+        "claimedByTrack": true,
+        "agreesWithClaim": true
+      }
+    },
+    "hi-IN": {
+      "track": "hi-IN",
+      "voice": "arcana/anaya/hin",
+      "noiseFloor": {
+        "controlText": "आपका ऑर्डर तैयार है। पुष्टि के लिए 9876543210 पर कॉल करें।",
+        "repeats": 4,
+        "deterministic": false,
+        "distinctShas": 4,
+        "minMs": 8107,
+        "maxMs": 9472,
+        "spreadMs": 1365
+      },
+      "phonemeControl": {
+        "probe": "नमस्ते {v2Enk0xt1arxm0xn} जी।",
+        "onDurationMs": 5120,
+        "offDurationMs": 5035,
+        "ratio": 0.983,
+        "engaging": false,
+        "claimedByTrack": false,
+        "agreesWithClaim": true
+      },
+      "spellControl": {
+        "withSpell": "आपका कोड spell(PNR4472) है।",
+        "spacedOut": "आपका कोड पी एन आर चार चार सात दो है।",
+        "spellDurationMs": 4949,
+        "spacedDurationMs": 4267,
+        "ratio": 1.16,
+        "honoured": true,
+        "claimedByTrack": true,
+        "agreesWithClaim": true
+      }
+    }
+  },
+  "fixtures": [
+    {
+      "id": "name-doheny",
+      "track": "en-US",
+      "category": "name",
+      "label": "Irish given name",
+      "naive": "Hi Siobhán Doheny, your Thursday appointment is confirmed.",
+      "ear": "Hi {S0Iv1an} {d1oh0xn0i}, your Thursday appointment is confirmed.",
+      "target": "shiv-AWN DOH-uh-nee",
+      "technique": [
+        "phoneme"
+      ],
+      "note": "Siobhán is spelled nothing like it sounds under English letter-to-sound rules. There is no formatting trick that fixes this one. It needs phonemes.",
+      "stress": false
+    },
+    {
+      "id": "name-xochitl",
+      "track": "en-US",
+      "category": "name",
+      "label": "Nahuatl-derived given name",
+      "naive": "Hi Xochitl Reyna, your prescription is ready for pickup.",
+      "ear": "Hi {s1oC0il} {r1en0x}, your prescription is ready for pickup.",
+      "target": "SO-cheel RAY-nah",
+      "technique": [
+        "phoneme"
+      ],
+      "note": "Common across the US Southwest and routinely read as \"zoh-chittle\" by English-first models. The leading X is an s sound.",
+      "stress": false
+    },
+    {
+      "id": "name-wojciechowski",
+      "track": "en-US",
+      "category": "name",
+      "label": "Polish surname",
+      "naive": "Krzysztof Wojciechowski, your delivery window has moved.",
+      "ear": "{kS1ISt0af} {v2OC0Eh1afsk0i}, your delivery window has moved.",
+      "target": "KSHISH-tof voy-cheh-HOF-skee",
+      "technique": [
+        "phoneme"
+      ],
+      "note": "Nine consonants and three vowels. English letter-to-sound rules produce something the person being called will not recognise as their own name.",
+      "stress": false
+    },
+    {
+      "id": "phone-raw",
+      "track": "en-US",
+      "category": "phone",
+      "label": "Unformatted 10-digit number",
+      "naive": "Call us back at 4155552671.",
+      "ear": "Call us back at (415) 555-2671.",
+      "target": "four one five, five five five, two six seven one",
+      "technique": [
+        "normalizer-format"
+      ],
+      "note": "Rime’s normalizer recognises (213) 555-9274 as a phone number. A bare run of ten digits carries no such signature.",
+      "stress": true,
+      "stressWhy": "Backends store phone numbers unformatted, so this is the string a naive integration actually sends. Ten digits with no separators are a number in the billions, not a phone number. The customer cannot write it down and cannot dial it back."
+    },
+    {
+      "id": "phone-ext",
+      "track": "en-US",
+      "category": "phone",
+      "label": "E.164 number with extension",
+      "naive": "Reach the clinic on +1-628-555-0119 ext 4402.",
+      "ear": "Reach the clinic on +1 (628) 555-0119, extension 4 4 0 2.",
+      "target": "plus one, six two eight, five five five, oh one one nine, extension four four oh two",
+      "technique": [
+        "normalizer-format",
+        "expand",
+        "pacing"
+      ],
+      "note": "Two problems in one string. \"ext\" is an abbreviation, and the 4402 after it is a digit sequence rather than a quantity of things.",
+      "stress": false
+    },
+    {
+      "id": "address-apt",
+      "track": "en-US",
+      "category": "address",
+      "label": "Street address with unit",
+      "naive": "Delivering to 1247 Alameda St Apt 4B between 2 and 4pm.",
+      "ear": "Delivering to 1247 Alameda Street, apartment 4 B, between 2 and 4pm.",
+      "target": "twelve forty-seven Alameda Street, apartment four B, between two and four PM",
+      "technique": [
+        "expand",
+        "pacing"
+      ],
+      "note": "The unit designator is the fragile part. 4B run together can surface as \"forty-B\". A space and a comma separate the number from the letter.",
+      "stress": false
+    },
+    {
+      "id": "address-saint",
+      "track": "en-US",
+      "category": "address",
+      "label": "Address where St is not Street",
+      "naive": "Your driver is waiting at 9 St Marys Ct, Mt Vernon.",
+      "ear": "Your driver is waiting at 9 Saint Mary’s Court, Mount Vernon.",
+      "target": "nine Saint Mary’s Court, Mount Vernon",
+      "technique": [
+        "expand"
+      ],
+      "note": "Three abbreviations, and the first one is the trap. Ct is Court and Mt is Mount, but St here is Saint, which is the reading a street-address normalizer is least likely to choose.",
+      "stress": true,
+      "stressWhy": "This is the failure that does not sound like a failure. \"Nine Street Marys Court\" is fluent, confident and wrong. Nothing in the audio signals a problem, so the customer writes down a plausible address and goes to the wrong place."
+    },
+    {
+      "id": "code-order",
+      "track": "en-US",
+      "category": "code",
+      "label": "Short alphanumeric order code",
+      "naive": "Your order code is A7X4B9.",
+      "ear": "Your order code is spell(A7X4B9).",
+      "target": "A, seven, X, four, B, nine",
+      "technique": [
+        "spell()"
+      ],
+      "note": "spell() is the only inline directive Rime supports, and this is what it is for. It also inserts the grouping pauses a listener needs to copy it down.",
+      "stress": false
+    },
+    {
+      "id": "code-po",
+      "track": "en-US",
+      "category": "code",
+      "label": "Purchase order with a year-shaped run",
+      "naive": "Purchase order PO-2004-EN has been approved.",
+      "ear": "Purchase order spell(PO2004EN) has been approved.",
+      "target": "P O, two zero zero four, E N",
+      "technique": [
+        "spell()"
+      ],
+      "note": "The digits look like a year and the letter pairs look like words. Left alone this can come out as \"po two thousand four en\".",
+      "stress": false
+    },
+    {
+      "id": "code-rx",
+      "track": "en-US",
+      "category": "code",
+      "label": "Prescription reference with a leading zero",
+      "naive": "Prescription RX0-8821-QN is ready.",
+      "ear": "Prescription spell(RX08821QN) is ready.",
+      "target": "R X zero, eight eight two one, Q N",
+      "technique": [
+        "spell()"
+      ],
+      "note": "Leading zeros are the ones that vanish. A zero read as part of a quantity rather than as a character makes the reference unusable at the counter.",
+      "stress": false
+    },
+    {
+      "id": "in-name-krishnamurthy",
+      "track": "en-IN",
+      "category": "name",
+      "label": "South Indian name",
+      "naive": "Good morning Venkataraman Krishnamurthy, your policy renewal is due.",
+      "ear": "Good morning {v2Enk0xt1arxm0xn} {kr0ISn0xm1RT0i}, your policy renewal is due.",
+      "target": "ven-kuh-TAA-ruh-mun krish-nuh-MUR-thee",
+      "technique": [
+        "phoneme"
+      ],
+      "note": "Six syllables then five. English letter-to-sound rules break both, and the stress lands in the wrong place even when the individual sounds are close.",
+      "stress": false
+    },
+    {
+      "id": "in-phone-mobile",
+      "track": "en-IN",
+      "category": "phone",
+      "label": "Indian mobile number, unformatted",
+      "naive": "Call us on +919876543210 for any changes.",
+      "ear": "Call us on +91 98765 43210 for any changes.",
+      "target": "plus nine one, nine eight seven six five, four three two one zero",
+      "technique": [
+        "normalizer-format",
+        "pacing"
+      ],
+      "note": "Indian mobile numbers are spoken as two groups of five, not the three groups a North American normalizer is tuned for. The country code has to separate as well, or it is absorbed into the first group.",
+      "stress": true,
+      "stressWhy": "Twelve digits with no separator at all. This is what the database column holds and what a naive integration sends. There is no country where a listener can take down a twelve digit cardinal number by ear."
+    },
+    {
+      "id": "in-address-bengaluru",
+      "track": "en-IN",
+      "category": "address",
+      "label": "Indian address with a PIN code",
+      "naive": "Delivering to 12/A, MG Rd, Nr Jayanagar 4th Blk, Bengaluru 560011.",
+      "ear": "Delivering to number 12 A, M G Road, near Jayanagar 4th Block, Bengaluru, PIN code 5 6 0 0 1 1.",
+      "target": "number twelve A, M G Road, near Jayanagar fourth Block, Bengaluru, PIN code five six zero zero one one",
+      "technique": [
+        "expand",
+        "pacing"
+      ],
+      "note": "Four problems in one line: the slash in 12/A, the initialism MG, two abbreviations a US-tuned normalizer has never seen (Nr, Blk), and a six digit PIN that must not become a quantity.",
+      "stress": false
+    },
+    {
+      "id": "in-code-gstin",
+      "track": "en-IN",
+      "category": "code",
+      "label": "GSTIN, fifteen mixed characters",
+      "naive": "Your invoice is filed under GSTIN 29ABCDE1234F1Z5.",
+      "ear": "Your invoice is filed under GSTIN spell(29ABCDE1234F1Z5).",
+      "target": "two nine, A B C D E, one two three four, F, one, Z, five",
+      "technique": [
+        "spell()"
+      ],
+      "note": "A GSTIN is fifteen characters alternating between digits and letters. Every run of digits in it is an identifier, never a quantity, and the letter blocks are not words.",
+      "stress": false
+    },
+    {
+      "id": "hi-phone-callback",
+      "track": "hi-IN",
+      "category": "phone",
+      "label": "Hindi callback number",
+      "naive": "आपका ऑर्डर तैयार है। पुष्टि के लिए 9876543210 पर कॉल करें।",
+      "ear": "आपका ऑर्डर तैयार है। पुष्टि के लिए, 98765 43210 पर कॉल करें।",
+      "target": "digit by digit, two groups of five: nau aath saat chhe paanch, chaar teen do ek shoonya",
+      "translation": "Your order is ready. To confirm, call 98765 43210.",
+      "technique": [
+        "normalizer-format",
+        "pacing"
+      ],
+      "note": "The same unformatted-number failure as the English tracks, in a language whose large numbers are built on lakh and crore rather than thousand and million, so a misread is even harder to unpick by ear.",
+      "stress": false
+    },
+    {
+      "id": "hi-code-booking",
+      "track": "hi-IN",
+      "category": "code",
+      "label": "Hindi booking reference",
+      "naive": "आपका बुकिंग कोड RJ4821K है। यात्रा के समय यह कोड बताएं।",
+      "ear": "आपका बुकिंग कोड spell(RJ4821K) है। यात्रा के समय यह कोड बताएं।",
+      "target": "R J, four eight two one, K",
+      "translation": "Your booking code is RJ4821K. Please quote this code when travelling.",
+      "technique": [
+        "spell()"
+      ],
+      "note": "Latin-script characters inside a Devanagari sentence. spell() was verified on this model before the fixture was written. On Coda, the other Hindi model in the catalog, the directive is spoken aloud as a word.",
+      "stress": false
+    },
+    {
+      "id": "hi-address-delhi",
+      "track": "hi-IN",
+      "category": "address",
+      "label": "Hindi address with a PIN code",
+      "naive": "डिलीवरी का पता 45/B, सेक्टर 12, द्वारका, नई दिल्ली 110078 है।",
+      "ear": "डिलीवरी का पता, मकान नंबर 45 बी, सेक्टर 12, द्वारका, नई दिल्ली, पिन कोड 1 1 0 0 7 8 है।",
+      "target": "makaan number paintaalis bee, sector baarah, Dwarka, New Delhi, PIN code ek ek shoonya shoonya saat aath",
+      "translation": "The delivery address is house number 45 B, Sector 12, Dwarka, New Delhi, PIN code 1 1 0 0 7 8.",
+      "technique": [
+        "expand",
+        "pacing"
+      ],
+      "note": "The Latin B and the slash both need help, and the six digit PIN has to stay a sequence of characters rather than collapsing into one number.",
+      "stress": false
+    }
+  ],
+  "techniques": {
+    "normalizer-format": "Reshaped into a pattern Rime’s normalizer recognises",
+    "spell()": "spell() reads the token letter and digit at a time",
+    "phoneme": "phonemizeBetweenBrackets, Rime’s phonetic alphabet",
+    "expand": "Abbreviation written out as the word it stands for",
+    "pacing": "Commas and sentence breaks used as prosody control"
+  },
+  "categories": {
+    "name": "Proper name",
+    "phone": "Phone number",
+    "address": "Address",
+    "code": "Reference code"
+  },
+  "clips": {
+    "name-doheny.naive": {
+      "state": "ready",
+      "src": "clips/name-doheny.naive.wav",
+      "durationMs": 3193,
+      "bytes": 153294,
+      "audioSha256": "bafba693e64ec5d16f6d3ff3c988fceb5174628c6b0cfa8a9e4abdeb84ab308a",
+      "container": "riff-added-locally",
+      "voice": "mistv2/summit/eng",
+      "track": "en-US",
+      "renderedAt": "2026-09-08T03:48:32.264Z",
+      "ttfbMs": 1178,
+      "totalMs": 1962,
+      "sampleRate": 24000
+    },
+    "name-doheny.ear": {
+      "state": "ready",
+      "src": "clips/name-doheny.ear.wav",
+      "durationMs": 3170,
+      "bytes": 152180,
+      "audioSha256": "07d74d46a0745f3745e380e98d28f6116e7c5a8aa74a15b50bc366b832ba1d5c",
+      "container": "riff-added-locally",
+      "voice": "mistv2/summit/eng",
+      "track": "en-US",
+      "renderedAt": "2026-09-08T03:48:32.985Z",
+      "ttfbMs": 436,
+      "totalMs": 718,
+      "sampleRate": 24000
+    },
+    "name-xochitl.naive": {
+      "state": "ready",
+      "src": "clips/name-xochitl.naive.wav",
+      "durationMs": 2972,
+      "bytes": 142706,
+      "audioSha256": "32c865656219b5db401855452a966cc961f9b043b0ce2c0ebb88da9d119bd3fd",
+      "container": "riff-added-locally",
+      "voice": "mistv2/summit/eng",
+      "track": "en-US",
+      "renderedAt": "2026-09-08T03:48:33.523Z",
+      "ttfbMs": 508,
+      "totalMs": 536,
+      "sampleRate": 24000
+    },
+    "name-xochitl.ear": {
+      "state": "ready",
+      "src": "clips/name-xochitl.ear.wav",
+      "durationMs": 2949,
+      "bytes": 141592,
+      "audioSha256": "36f566d4cb7fc2a6e9302a5181ba83c66daaf241069b457fa03f499975856642",
+      "container": "riff-added-locally",
+      "voice": "mistv2/summit/eng",
+      "track": "en-US",
+      "renderedAt": "2026-09-08T03:48:34.145Z",
+      "ttfbMs": 592,
+      "totalMs": 621,
+      "sampleRate": 24000
+    },
+    "name-wojciechowski.naive": {
+      "state": "ready",
+      "src": "clips/name-wojciechowski.naive.wav",
+      "durationMs": 3471,
+      "bytes": 166670,
+      "audioSha256": "cdd11bb4f06614212ebc535bd56b647daa7db8dc9f346d99d733113e5108c6d7",
+      "container": "riff-added-locally",
+      "voice": "mistv2/summit/eng",
+      "track": "en-US",
+      "renderedAt": "2026-09-08T03:48:34.883Z",
+      "ttfbMs": 475,
+      "totalMs": 736,
+      "sampleRate": 24000
+    },
+    "name-wojciechowski.ear": {
+      "state": "ready",
+      "src": "clips/name-wojciechowski.ear.wav",
+      "durationMs": 3309,
+      "bytes": 158868,
+      "audioSha256": "509e66a14298c633fcbdc664ddf47104f1429b5e588fe5ab3840c4aa7e991432",
+      "container": "riff-added-locally",
+      "voice": "mistv2/summit/eng",
+      "track": "en-US",
+      "renderedAt": "2026-09-08T03:48:35.412Z",
+      "ttfbMs": 494,
+      "totalMs": 526,
+      "sampleRate": 24000
+    },
+    "phone-raw.naive": {
+      "state": "ready",
+      "src": "clips/phone-raw.naive.wav",
+      "durationMs": 3947,
+      "bytes": 189518,
+      "audioSha256": "7272ee93fdc0ed24ca623b58d10a19dbffc01a066048670acc133ce2095f8c7a",
+      "container": "riff-added-locally",
+      "voice": "mistv2/summit/eng",
+      "track": "en-US",
+      "renderedAt": "2026-09-08T03:48:36.251Z",
+      "ttfbMs": 535,
+      "totalMs": 838,
+      "sampleRate": 24000
+    },
+    "phone-raw.ear": {
+      "state": "ready",
+      "src": "clips/phone-raw.ear.wav",
+      "durationMs": 4679,
+      "bytes": 224626,
+      "audioSha256": "3eebc3492539c9431879e4c24825eaccf7bd110408b50d7d208dd3c085aa8149",
+      "container": "riff-added-locally",
+      "voice": "mistv2/summit/eng",
+      "track": "en-US",
+      "renderedAt": "2026-09-08T03:48:37.071Z",
+      "ttfbMs": 518,
+      "totalMs": 816,
+      "sampleRate": 24000
+    },
+    "phone-ext.naive": {
+      "state": "ready",
+      "src": "clips/phone-ext.naive.wav",
+      "durationMs": 7558,
+      "bytes": 362832,
+      "audioSha256": "31ca81cfba89f431b0a917463449a9a217d1f0212f660f9b5b2a576629d4b707",
+      "container": "riff-added-locally",
+      "voice": "mistv2/summit/eng",
+      "track": "en-US",
+      "renderedAt": "2026-09-08T03:48:38.277Z",
+      "ttfbMs": 537,
+      "totalMs": 1204,
+      "sampleRate": 24000
+    },
+    "phone-ext.ear": {
+      "state": "ready",
+      "src": "clips/phone-ext.ear.wav",
+      "durationMs": 7535,
+      "bytes": 361718,
+      "audioSha256": "62018d55694b0902bb895b08babad81da23451df06f9f7531bd264c7e2f8bfd1",
+      "container": "riff-added-locally",
+      "voice": "mistv2/summit/eng",
+      "track": "en-US",
+      "renderedAt": "2026-09-08T03:48:39.425Z",
+      "ttfbMs": 565,
+      "totalMs": 1146,
+      "sampleRate": 24000
+    },
+    "address-apt.naive": {
+      "state": "ready",
+      "src": "clips/address-apt.naive.wav",
+      "durationMs": 4528,
+      "bytes": 217382,
+      "audioSha256": "a248bb2b67b3b9f921bffe6795387cb1ad1122efc17ff96ae946d79221347a30",
+      "container": "riff-added-locally",
+      "voice": "mistv2/summit/eng",
+      "track": "en-US",
+      "renderedAt": "2026-09-08T03:48:40.157Z",
+      "ttfbMs": 461,
+      "totalMs": 729,
+      "sampleRate": 24000
+    },
+    "address-apt.ear": {
+      "state": "ready",
+      "src": "clips/address-apt.ear.wav",
+      "durationMs": 4981,
+      "bytes": 239116,
+      "audioSha256": "f211125bd8b0b53ced185912c04e1a1bac47c7be878ab692997d43decd28d848",
+      "container": "riff-added-locally",
+      "voice": "mistv2/summit/eng",
+      "track": "en-US",
+      "renderedAt": "2026-09-08T03:48:41.026Z",
+      "ttfbMs": 533,
+      "totalMs": 867,
+      "sampleRate": 24000
+    },
+    "address-saint.naive": {
+      "state": "ready",
+      "src": "clips/address-saint.naive.wav",
+      "durationMs": 3379,
+      "bytes": 162212,
+      "audioSha256": "567b3da6dbb995789890e91da58866e318f0c712ad32fc3f278a1c9cb4dbc9e8",
+      "container": "riff-added-locally",
+      "voice": "mistv2/summit/eng",
+      "track": "en-US",
+      "renderedAt": "2026-09-08T03:48:41.814Z",
+      "ttfbMs": 518,
+      "totalMs": 786,
+      "sampleRate": 24000
+    },
+    "address-saint.ear": {
+      "state": "ready",
+      "src": "clips/address-saint.ear.wav",
+      "durationMs": 3390,
+      "bytes": 162768,
+      "audioSha256": "30ecf7d5fd7a2bd2408629abb3fbc8a9d3a2947ef0c94b0016f6ab880a3d1267",
+      "container": "riff-added-locally",
+      "voice": "mistv2/summit/eng",
+      "track": "en-US",
+      "renderedAt": "2026-09-08T03:48:42.615Z",
+      "ttfbMs": 503,
+      "totalMs": 799,
+      "sampleRate": 24000
+    },
+    "code-order.naive": {
+      "state": "ready",
+      "src": "clips/code-order.naive.wav",
+      "durationMs": 2368,
+      "bytes": 113728,
+      "audioSha256": "a8dd4612620c88b0c6f90b5726ab7660dde13e0ec8018ee651801b474712d7f5",
+      "container": "riff-added-locally",
+      "voice": "mistv2/summit/eng",
+      "track": "en-US",
+      "renderedAt": "2026-09-08T03:48:43.381Z",
+      "ttfbMs": 495,
+      "totalMs": 765,
+      "sampleRate": 24000
+    },
+    "code-order.ear": {
+      "state": "ready",
+      "src": "clips/code-order.ear.wav",
+      "durationMs": 3100,
+      "bytes": 148836,
+      "audioSha256": "25bed6744cc6b2b0e2ee89e55a68a824ceab20b6b806f49a1a007e31a02ad4b4",
+      "container": "riff-added-locally",
+      "voice": "mistv2/summit/eng",
+      "track": "en-US",
+      "renderedAt": "2026-09-08T03:48:44.378Z",
+      "ttfbMs": 542,
+      "totalMs": 994,
+      "sampleRate": 24000
+    },
+    "code-po.naive": {
+      "state": "ready",
+      "src": "clips/code-po.naive.wav",
+      "durationMs": 3181,
+      "bytes": 152738,
+      "audioSha256": "9168055bba7d0103bc5c8f94bbccabb67f4818583ede58929a384c5304ab8e93",
+      "container": "riff-added-locally",
+      "voice": "mistv2/summit/eng",
+      "track": "en-US",
+      "renderedAt": "2026-09-08T03:48:44.874Z",
+      "ttfbMs": 465,
+      "totalMs": 493,
+      "sampleRate": 24000
+    },
+    "code-po.ear": {
+      "state": "ready",
+      "src": "clips/code-po.ear.wav",
+      "durationMs": 3901,
+      "bytes": 187288,
+      "audioSha256": "c5c0f0ff2ebd922e6ea46a1818bc26ee633be819e1da3eb146fbfeeb14adabdd",
+      "container": "riff-added-locally",
+      "voice": "mistv2/summit/eng",
+      "track": "en-US",
+      "renderedAt": "2026-09-08T03:48:45.709Z",
+      "ttfbMs": 568,
+      "totalMs": 834,
+      "sampleRate": 24000
+    },
+    "code-rx.naive": {
+      "state": "ready",
+      "src": "clips/code-rx.naive.wav",
+      "durationMs": 4214,
+      "bytes": 202336,
+      "audioSha256": "96a82baca738a5a58e8d600b977380ca5992ebf6103f974f4e73faf105d53bff",
+      "container": "riff-added-locally",
+      "voice": "mistv2/summit/eng",
+      "track": "en-US",
+      "renderedAt": "2026-09-08T03:48:46.650Z",
+      "ttfbMs": 672,
+      "totalMs": 939,
+      "sampleRate": 24000
+    },
+    "code-rx.ear": {
+      "state": "ready",
+      "src": "clips/code-rx.ear.wav",
+      "durationMs": 4609,
+      "bytes": 221282,
+      "audioSha256": "3939464488854b12d7423ce4f1427490a97cf5ae69f200ee4ffc41cf26ec7086",
+      "container": "riff-added-locally",
+      "voice": "mistv2/summit/eng",
+      "track": "en-US",
+      "renderedAt": "2026-09-08T03:48:47.421Z",
+      "ttfbMs": 503,
+      "totalMs": 768,
+      "sampleRate": 24000
+    },
+    "in-name-krishnamurthy.naive": {
+      "state": "ready",
+      "src": "clips/in-name-krishnamurthy.naive.wav",
+      "durationMs": 3901,
+      "bytes": 187288,
+      "audioSha256": "5f80bd5375a59380a73fea2d47d12eab9c2f65f9c08ef2bf1c1380d2299aa09f",
+      "container": "riff-added-locally",
+      "voice": "mistv2/ritu/eng",
+      "track": "en-IN",
+      "renderedAt": "2026-09-08T03:48:48.299Z",
+      "ttfbMs": 591,
+      "totalMs": 875,
+      "sampleRate": 24000
+    },
+    "in-name-krishnamurthy.ear": {
+      "state": "ready",
+      "src": "clips/in-name-krishnamurthy.ear.wav",
+      "durationMs": 3773,
+      "bytes": 181158,
+      "audioSha256": "dfbe2e6bc0d255c43182ce631cf53175ce27e35be73b0c50d4708abc7ddfc1dd",
+      "container": "riff-added-locally",
+      "voice": "mistv2/ritu/eng",
+      "track": "en-IN",
+      "renderedAt": "2026-09-08T03:48:48.861Z",
+      "ttfbMs": 495,
+      "totalMs": 559,
+      "sampleRate": 24000
+    },
+    "in-phone-mobile.naive": {
+      "state": "ready",
+      "src": "clips/in-phone-mobile.naive.wav",
+      "durationMs": 5399,
+      "bytes": 259178,
+      "audioSha256": "6b2e2bab77c2a9f599dcdce3686f5def13098de7ca13e3edc86c16e61ba261b8",
+      "container": "riff-added-locally",
+      "voice": "mistv2/ritu/eng",
+      "track": "en-IN",
+      "renderedAt": "2026-09-08T03:48:49.628Z",
+      "ttfbMs": 490,
+      "totalMs": 765,
+      "sampleRate": 24000
+    },
+    "in-phone-mobile.ear": {
+      "state": "ready",
+      "src": "clips/in-phone-mobile.ear.wav",
+      "durationMs": 5480,
+      "bytes": 263078,
+      "audioSha256": "dc15216c7d10dda96e7c35f0d7675f07e9a85f19e06b729e217be290c041ed87",
+      "container": "riff-added-locally",
+      "voice": "mistv2/ritu/eng",
+      "track": "en-IN",
+      "renderedAt": "2026-09-08T03:48:50.469Z",
+      "ttfbMs": 529,
+      "totalMs": 838,
+      "sampleRate": 24000
+    },
+    "in-address-bengaluru.naive": {
+      "state": "ready",
+      "src": "clips/in-address-bengaluru.naive.wav",
+      "durationMs": 8185,
+      "bytes": 392924,
+      "audioSha256": "10edf022698b959cf43c4b13cbf35e6bf19577ededa7ee0f7e7a3f724f6aa9b9",
+      "container": "riff-added-locally",
+      "voice": "mistv2/ritu/eng",
+      "track": "en-IN",
+      "renderedAt": "2026-09-08T03:48:51.742Z",
+      "ttfbMs": 706,
+      "totalMs": 1271,
+      "sampleRate": 24000
+    },
+    "in-address-bengaluru.ear": {
+      "state": "ready",
+      "src": "clips/in-address-bengaluru.ear.wav",
+      "durationMs": 7930,
+      "bytes": 380664,
+      "audioSha256": "bf9fd438f05b01610c719118cabb371ba51ea22b344e72d2a9fd59ad26c8785a",
+      "container": "riff-added-locally",
+      "voice": "mistv2/ritu/eng",
+      "track": "en-IN",
+      "renderedAt": "2026-09-08T03:48:52.707Z",
+      "ttfbMs": 625,
+      "totalMs": 958,
+      "sampleRate": 24000
+    },
+    "in-code-gstin.naive": {
+      "state": "ready",
+      "src": "clips/in-code-gstin.naive.wav",
+      "durationMs": 6107,
+      "bytes": 293172,
+      "audioSha256": "d3714dfa44f5ae731e1edec728b03b94fc13ada95554efded708781911ef1833",
+      "container": "riff-added-locally",
+      "voice": "mistv2/ritu/eng",
+      "track": "en-IN",
+      "renderedAt": "2026-09-08T03:48:53.568Z",
+      "ttfbMs": 574,
+      "totalMs": 857,
+      "sampleRate": 24000
+    },
+    "in-code-gstin.ear": {
+      "state": "ready",
+      "src": "clips/in-code-gstin.ear.wav",
+      "durationMs": 7117,
+      "bytes": 341654,
+      "audioSha256": "81c8baa4249e33142dd50686300a6fde75953a264b11af4dcbb9341e34d3e32f",
+      "container": "riff-added-locally",
+      "voice": "mistv2/ritu/eng",
+      "track": "en-IN",
+      "renderedAt": "2026-09-08T03:48:54.449Z",
+      "ttfbMs": 567,
+      "totalMs": 879,
+      "sampleRate": 24000
+    },
+    "hi-phone-callback.naive": {
+      "state": "ready",
+      "src": "clips/hi-phone-callback.naive.wav",
+      "durationMs": 9131,
+      "bytes": 438316,
+      "audioSha256": "0c21085a4824ef1c0d8409b5493ed9130077d2336720e6a6a2e7d91794e06b6e",
+      "container": "riff-from-upstream",
+      "voice": "arcana/anaya/hin",
+      "track": "hi-IN",
+      "renderedAt": "2026-09-08T03:48:58.513Z",
+      "ttfbMs": 725,
+      "totalMs": 4062,
+      "sampleRate": 24000
+    },
+    "hi-phone-callback.ear": {
+      "state": "ready",
+      "src": "clips/hi-phone-callback.ear.wav",
+      "durationMs": 8533,
+      "bytes": 409644,
+      "audioSha256": "2f545cd00c472c9508ab566f5fdc349cc718a2f5cf7f14392353bd8717c21890",
+      "container": "riff-from-upstream",
+      "voice": "arcana/anaya/hin",
+      "track": "hi-IN",
+      "renderedAt": "2026-09-08T03:49:02.099Z",
+      "ttfbMs": 479,
+      "totalMs": 3585,
+      "sampleRate": 24000
+    },
+    "hi-code-booking.naive": {
+      "state": "ready",
+      "src": "clips/hi-code-booking.naive.wav",
+      "durationMs": 6059,
+      "bytes": 290860,
+      "audioSha256": "8556ef39cc34c6cca73d344141a0fda6def46fcd0df673a51c4807586891a2fa",
+      "container": "riff-from-upstream",
+      "voice": "arcana/anaya/hin",
+      "track": "hi-IN",
+      "renderedAt": "2026-09-08T03:49:04.868Z",
+      "ttfbMs": 569,
+      "totalMs": 2766,
+      "sampleRate": 24000
+    },
+    "hi-code-booking.ear": {
+      "state": "ready",
+      "src": "clips/hi-code-booking.ear.wav",
+      "durationMs": 7595,
+      "bytes": 364588,
+      "audioSha256": "34790263751cfc9bbe686e46e8ea41330c2e0b55b54bd6509d8e82f4b1ae8357",
+      "container": "riff-from-upstream",
+      "voice": "arcana/anaya/hin",
+      "track": "hi-IN",
+      "renderedAt": "2026-09-08T03:49:08.109Z",
+      "ttfbMs": 488,
+      "totalMs": 3239,
+      "sampleRate": 24000
+    },
+    "hi-address-delhi.naive": {
+      "state": "ready",
+      "src": "clips/hi-address-delhi.naive.wav",
+      "durationMs": 9643,
+      "bytes": 462892,
+      "audioSha256": "b0d771bba4b5bdfcdf6ebd95da5117678f98bff4166f31c449a29c30a658426e",
+      "container": "riff-from-upstream",
+      "voice": "arcana/anaya/hin",
+      "track": "hi-IN",
+      "renderedAt": "2026-09-08T03:49:12.097Z",
+      "ttfbMs": 479,
+      "totalMs": 3987,
+      "sampleRate": 24000
+    },
+    "hi-address-delhi.ear": {
+      "state": "ready",
+      "src": "clips/hi-address-delhi.ear.wav",
+      "durationMs": 11179,
+      "bytes": 536620,
+      "audioSha256": "33fb597264446fde9289746b1f8f477348b294b4e805b6f8c9e1b5aaf4c4ac8c",
+      "container": "riff-from-upstream",
+      "voice": "arcana/anaya/hin",
+      "track": "hi-IN",
+      "renderedAt": "2026-09-08T03:49:16.668Z",
+      "ttfbMs": 484,
+      "totalMs": 4567,
+      "sampleRate": 24000
+    }
+  },
+  "verdicts": {}
+}

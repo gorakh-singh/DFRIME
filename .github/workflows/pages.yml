@@ -1,0 +1,58 @@
+# Publishes public/ to GitHub Pages.
+#
+# There is no build step because there is nothing to build: no dependencies, no
+# bundler, no transpiler. This workflow uploads the public/ directory as it is.
+#
+# It does NOT regenerate the clips. That needs the Rime API key, and a key does
+# not belong in CI for a project whose whole point is that the key stays server
+# side. Run `npm run generate && npm run build:static` locally and commit the
+# result, so what ships is audio a person has actually listened to.
+#
+# Enable by setting Settings -> Pages -> Source to "GitHub Actions".
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # A static deploy with no state.json cannot load at all, and one with a
+      # state.json older than the clips would describe audio that is no longer
+      # there. Both are worth failing on rather than shipping.
+      - name: Check the static build was committed
+        run: |
+          test -f public/state.json || {
+            echo "public/state.json is missing. Run 'npm run build:static' locally and commit it."
+            exit 1
+          }
+          count=$(ls public/clips/*.wav 2>/dev/null | wc -l)
+          echo "$count clips found"
+          test "$count" -gt 0 || {
+            echo "No clips committed. Run 'npm run generate' locally and commit public/clips/."
+            exit 1
+          }
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+      - id: deployment
+        uses: actions/deploy-pages@v4

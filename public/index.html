@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Written for the Ear</title>
+    <meta
+      name="description"
+      content="A controlled comparison of raw backend strings against strings rewritten for the ear, rendered by Rime with the model, voice and language held constant."
+    />
+    <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <a class="skip" href="#bench">Skip to the comparison</a>
+
+    <!-- Provider disclosure. Sticky, so whatever is speaking is named at all
+         times, on every scroll position, on every screen size. -->
+    <header class="topbar">
+      <div class="wrap">
+        <div class="wordmark">Written for the Ear <span>/ Rime</span></div>
+        <div class="provider">
+          <span class="provider-chip" id="provider-chip">
+            <svg class="icon"><use href="/icons/sprite.svg#i-speaker-high" /></svg>
+            <span id="provider-name">Provider: Rime</span>
+          </span>
+          <span class="provider-voice mono" id="provider-voice">reading run configuration</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- ------------------------------------------------------------ hero -->
+      <section class="hero">
+        <div class="wrap">
+          <div class="hero-grid">
+            <div>
+              <p class="eyebrow">Hard voice problem: pronunciation and controlled delivery</p>
+              <h1>The data is right. The speech is wrong.</h1>
+              <p class="lede">
+                Automated calls read names, phone numbers and reference codes
+                straight from a database. Naive text-to-speech garbles all three.
+              </p>
+              <div class="cta-row">
+                <a class="btn btn-primary" href="#bench" data-jump-stress>
+                  <svg class="icon"><use href="/icons/sprite.svg#i-warning-diamond" /></svg>
+                  Hear the stress case
+                </a>
+                <a class="btn" href="/RIME_EVIDENCE.md">
+                  <svg class="icon"><use href="/icons/sprite.svg#i-arrow-square-out" /></svg>
+                  Read the evidence
+                </a>
+              </div>
+            </div>
+
+            <!-- Read from /api/state at load. This is the configuration the
+                 page is actually operating, not a picture of one. -->
+            <div class="runcard">
+              <div class="runcard-head">Run configuration</div>
+              <dl id="runcard-body">
+                <dt>status</dt>
+                <dd>loading</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- --------------------------------------------------------- problem -->
+      <section class="section-pad">
+        <div class="wrap">
+          <div class="section-head">
+            <h2>Voice is not the wrapper here. It is the product.</h2>
+          </div>
+          <div style="display: grid; gap: 18px; max-width: 66ch">
+            <p class="lede">
+              The user is an operations team running outbound automated calls:
+              order confirmations, appointment reminders, delivery updates. Every
+              call carries variable data pulled from a database, and the data is
+              the reason for the call.
+            </p>
+            <p class="lede">
+              A customer who cannot make out the phone number does not scroll back
+              and re-read it. There is nothing to re-read. They hang up and call a
+              human, which is the cost the automation was bought to avoid, or they
+              write down something wrong and act on it, which is worse. Take the
+              speech away and there is no product left, only a row in a table that
+              nobody reads.
+            </p>
+            <p class="lede">
+              So the failure mode that matters is not a robotic voice. It is a
+              confident voice saying the wrong characters.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ----------------------------------------------------------- claim -->
+      <section class="section-pad">
+        <div class="wrap">
+          <div class="section-head">
+            <h2>The claim, and what is held constant</h2>
+            <p class="lede">
+              Everything below exists to let you falsify one sentence.
+            </p>
+          </div>
+          <p class="claim">
+            Rewriting a string for the ear, through spacing, punctuation and
+            phrasing, measurably improves Rime’s pronunciation of names, phone
+            numbers, addresses and reference codes compared to sending the raw
+            string unchanged, <em>with the model, voice and language held
+            constant</em>.
+          </p>
+          <div class="constants" id="constants">
+            <div class="constant">
+              <div class="constant-k">loading</div>
+              <div class="constant-v">reading /api/state</div>
+            </div>
+          </div>
+          <p class="lede" style="margin-top: 22px">
+            Those values are read from the running server, not typed into this
+            page. Both variants of every fixture are sent with exactly them. The
+            only thing that differs between a pair of clips is the characters in
+            the text field.
+          </p>
+        </div>
+      </section>
+
+      <!-- ------------------------------------------------------- workbench -->
+      <section class="section-pad" id="bench">
+        <div class="wrap">
+          <div class="section-head">
+            <h2>Seventeen fixtures, two strings each</h2>
+            <p class="lede">
+              Pick a fixture. You get the exact string a backend would send, the
+              same information rewritten for the ear, both clips, and the
+              pronunciation each one is aiming at. Three voices, grouped below:
+              US English, Indian English, and Hindi.
+            </p>
+          </div>
+          <div class="bench">
+            <nav class="rail" id="rail" aria-label="Fixtures"></nav>
+            <div id="panel-host">
+              <p class="loading-note">Loading fixtures.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ----------------------------------------------------- live render -->
+      <section class="section-pad" id="live">
+        <div class="wrap">
+          <div class="section-head">
+            <h2>Change the text and call Rime yourself</h2>
+            <p class="lede">
+              Everything above is a stored clip with a timestamp on it. This is
+              not. Edit the string, press render, and the audio you hear comes
+              back from Rime during this page view.
+            </p>
+          </div>
+          <div class="live-grid">
+            <div class="field">
+              <label for="live-track">Voice</label>
+              <select id="live-track" class="mono"></select>
+              <label for="live-text" style="margin-top:6px">Text sent to Rime</label>
+              <textarea
+                id="live-text"
+                spellcheck="false"
+                placeholder="Call us back at (415) 555-2671."
+              ></textarea>
+              <div class="field-foot">
+                <button class="btn btn-primary" id="live-render">
+                  <svg class="icon"><use href="/icons/sprite.svg#i-broadcast" /></svg>
+                  Render live
+                </button>
+                <span class="counter mono" id="live-counter">0 / 1000</span>
+              </div>
+              <p class="help">
+                Load either variant of any fixture with the buttons on the right,
+                then change a character and hear what moves.
+              </p>
+              <div id="live-out"></div>
+            </div>
+
+            <div>
+              <div class="foot-h">Load a fixture string</div>
+              <div class="preset-row" id="live-presets"></div>
+              <div class="foot-h" style="margin-top: 28px">Where the key lives</div>
+              <p style="font-size: 13.5px; color: var(--ink-2)">
+                <svg class="icon" style="color: var(--ink-3)">
+                  <use href="/icons/sprite.svg#i-lock-key" />
+                </svg>
+                The Rime key is read from <code class="mono">.env</code> into the
+                Node process. The browser posts to
+                <code class="mono">/api/render</code>, which holds the key and
+                calls Rime. No key is ever sent to this page.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- --------------------------------------------------------- results -->
+      <section class="section-pad" id="result">
+        <div class="wrap">
+          <div class="section-head">
+            <h2>What the listening log says</h2>
+            <p class="lede">
+              No score is computed from the audio. A machine grading its own
+              pronunciation would prove nothing. These are the verdicts recorded
+              by whoever last sat and listened, including the ones that went
+              against the claim.
+            </p>
+          </div>
+          <div class="tally" id="tally"></div>
+          <div class="log" id="log"></div>
+          <p class="lede" style="margin-top: 22px" id="noise-floor"></p>
+          <p class="lede" style="margin-top: 16px" id="result-note"></p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <div class="foot-grid">
+          <div>
+            <div class="foot-h">Speech</div>
+            <ul class="foot-list">
+              <li id="foot-provider">Provider: Rime</li>
+              <li id="foot-voice" class="mono"></li>
+              <li id="foot-audio" class="mono"></li>
+              <li id="foot-fallback">No fallback provider configured</li>
+            </ul>
+          </div>
+          <div>
+            <div class="foot-h">Reproduce it</div>
+            <ul class="foot-list">
+              <li><code class="mono">npm run catalog</code></li>
+              <li><code class="mono">npm run generate</code></li>
+              <li><code class="mono">npm run preflight</code></li>
+              <li><code class="mono">npm start</code></li>
+            </ul>
+          </div>
+          <div>
+            <div class="foot-h">Read</div>
+            <ul class="foot-list">
+              <li><a href="/RIME_EVIDENCE.md">RIME_EVIDENCE.md</a></li>
+              <li><a href="/README.md">README.md</a></li>
+              <li><a href="/clips/manifest.json">Clip manifest</a></li>
+              <li><a href="/api/state">Live server state</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="foot-h">Rime</div>
+            <ul class="foot-list">
+              <li><a href="https://docs.rime.ai/docs/models">Models</a></li>
+              <li>
+                <a href="https://users.rime.ai/data/voices/all-v2.json">Voice catalog</a>
+              </li>
+              <li>
+                <a href="https://docs.rime.ai/docs/text-normalization">Text normalization</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

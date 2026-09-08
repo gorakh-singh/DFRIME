@@ -1,0 +1,21 @@
+{
+  "name": "written-for-the-ear",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Rime hackathon submission. Pronunciation and controlled delivery: a controlled A/B of raw backend strings against strings rewritten for the ear.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.12"
+  },
+  "scripts": {
+    "catalog": "node scripts/catalog.mjs",
+    "generate": "node scripts/generate.mjs",
+    "preflight": "node scripts/preflight.mjs",
+    "start": "node server.mjs",
+    "dev": "node server.mjs",
+    "build:static": "node scripts/build-static.mjs"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

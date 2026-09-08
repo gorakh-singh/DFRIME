@@ -1,0 +1,1172 @@
+@import url('/fonts/fonts.css');
+
+/* ==========================================================================
+   Written for the Ear
+
+   Design decisions, stated so they can be checked:
+
+   Type       Geist for chrome and prose, Geist Mono for every literal string
+              that is sent to Rime. The mono is functional. It marks the exact
+              characters that get spoken, which is the whole subject here.
+
+   Accent     One colour, terracotta, and it only ever marks functional state:
+              live calls, the selected fixture, the stress case, and the
+              currently playing clip. Nothing decorative uses it.
+
+   Status     Verdicts and clip provenance are carried by an icon plus a word,
+              never by colour alone. A second status colour would compete with
+              the accent and would fail anyone who cannot separate the two.
+
+   Radii      Panels 10px, controls 7px, chips 5px. Three steps, applied
+              consistently, nothing fully rounded.
+
+   Motion     Only where it tracks real state: the playhead follows real
+              currentTime, the live indicator runs only while a request is in
+              flight. There are no entrance animations.
+   ========================================================================== */
+
+:root {
+  --bg: #f7f7f6;
+  --surface: #ffffff;
+  --surface-2: #f1f0ee;
+  --ink: #171614;
+  --ink-2: #55524c;
+  --ink-3: #86827a;
+  --rule: #e2e0dc;
+  --rule-strong: #cbc8c2;
+  --accent: #b04026;
+  --accent-hover: #942f18;
+  --accent-ink: #ffffff;
+  --accent-wash: rgb(176 64 38 / 0.07);
+  --accent-line: rgb(176 64 38 / 0.28);
+  --wave: #cbc8c2;
+  --wave-played: #b04026;
+
+  --r-panel: 10px;
+  --r-control: 7px;
+  --r-chip: 5px;
+
+  --shadow: 0 1px 2px rgb(23 22 20 / 0.04), 0 8px 24px rgb(23 22 20 / 0.05);
+  --max: 1180px;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #131211;
+    --surface: #1a1918;
+    --surface-2: #201f1d;
+    --ink: #f2f0ec;
+    --ink-2: #a9a49b;
+    --ink-3: #7b766d;
+    --rule: #2e2c29;
+    --rule-strong: #423f3a;
+    --accent: #e2724f;
+    --accent-hover: #f08a68;
+    --accent-ink: #1a1008;
+    --accent-wash: rgb(226 114 79 / 0.11);
+    --accent-line: rgb(226 114 79 / 0.34);
+    --wave: #423f3a;
+    --wave-played: #e2724f;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.28);
+
+    color-scheme: dark;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  line-height: 1.12;
+  letter-spacing: -0.022em;
+  font-weight: 560;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  text-decoration-color: var(--accent);
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  flex: none;
+  fill: currentColor;
+  vertical-align: -0.135em;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+.mono {
+  font-family: 'Geist Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  font-feature-settings: 'zero' 1;
+}
+
+.eyebrow {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 20px;
+}
+
+.lede {
+  color: var(--ink-2);
+  font-size: 17px;
+  max-width: 62ch;
+}
+
+section {
+  border-top: 1px solid var(--rule);
+}
+
+.section-pad {
+  padding-block: 72px;
+}
+
+.section-head {
+  max-width: 60ch;
+  margin-bottom: 36px;
+}
+
+.section-head h2 {
+  font-size: clamp(24px, 3vw, 31px);
+  margin-bottom: 14px;
+}
+
+/* --------------------------------------------------------------- top bar */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule);
+}
+
+.topbar .wrap {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.wordmark {
+  font-weight: 560;
+  font-size: 15px;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+}
+
+.wordmark span {
+  color: var(--ink-3);
+  font-weight: 400;
+}
+
+/* The provider readout. Always visible, never collapsed away. */
+.provider {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.provider-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 10px;
+  border: 1px solid var(--accent-line);
+  background: var(--accent-wash);
+  color: var(--accent);
+  border-radius: var(--r-chip);
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 11.5px;
+  white-space: nowrap;
+}
+
+.provider-voice {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 11.5px;
+  color: var(--ink-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 860px) {
+  .provider-voice {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------ hero */
+
+.hero {
+  border-top: 0;
+  padding-block: clamp(48px, 7vw, 88px);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: 56px;
+  align-items: start;
+}
+
+.hero h1 {
+  font-size: clamp(34px, 5.2vw, 56px);
+  margin-bottom: 22px;
+  max-width: 15ch;
+}
+
+.hero .lede {
+  margin-bottom: 30px;
+}
+
+.cta-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* The hero's right-hand asset is the live run configuration, read from
+   /api/state. It is the real thing this page is operating, not an image of
+   one, which is why there is no photograph here. */
+.runcard {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-panel);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.runcard-head {
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--rule);
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  background: var(--surface-2);
+}
+
+.runcard dl {
+  margin: 0;
+  padding: 6px 18px 16px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0 20px;
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 12.5px;
+}
+
+.runcard dt {
+  color: var(--ink-3);
+  padding-top: 10px;
+  white-space: nowrap;
+}
+
+.runcard dd {
+  margin: 0;
+  padding-top: 10px;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .hero h1 {
+    max-width: none;
+  }
+}
+
+/* --------------------------------------------------------------- buttons */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: var(--r-control);
+  border: 1px solid var(--rule-strong);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 14.5px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.14s ease, border-color 0.14s ease,
+    transform 0.08s ease;
+}
+
+.btn:hover:not(:disabled) {
+  border-color: var(--ink-3);
+  background: var(--surface-2);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.btn-sm {
+  padding: 7px 11px;
+  font-size: 13px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+  .btn:active:not(:disabled) {
+    transform: none;
+  }
+}
+
+/* ------------------------------------------------------- claim + constants */
+
+.claim {
+  font-size: clamp(20px, 2.6vw, 27px);
+  line-height: 1.35;
+  letter-spacing: -0.018em;
+  max-width: 34ch;
+  border-left: 2px solid var(--accent);
+  padding-left: 24px;
+}
+
+.claim em {
+  font-style: italic;
+  font-weight: 560;
+}
+
+.constants {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(178px, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-panel);
+  overflow: hidden;
+  margin-top: 40px;
+}
+
+.constant {
+  background: var(--surface);
+  padding: 16px 18px;
+}
+
+.constant-k {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 6px;
+}
+
+.constant-v {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+/* ------------------------------------------------------------- workbench */
+
+.bench {
+  display: grid;
+  grid-template-columns: 268px minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.rail {
+  position: sticky;
+  top: 78px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-panel);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.rail-group-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 16px 6px;
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  border-top: 1px solid var(--rule);
+}
+
+.rail-group-label:first-child {
+  border-top: 0;
+}
+
+/* The voice under each group heading. A page with three speakers has to say
+   which one is about to talk, at the point where the choice is made. */
+.rail-voice {
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink-3);
+  font-size: 10.5px;
+}
+
+/* Names the voice on the panel itself, so the pair being compared is always
+   attributable without scrolling back to the rail. */
+.voice-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: auto;
+  padding: 2px 7px;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--r-chip);
+  color: var(--ink-2);
+  font-size: 11px;
+}
+
+.log-track {
+  color: var(--ink-3);
+  font-size: 11px;
+}
+
+.field select {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 13px;
+  padding: 9px 11px;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--r-control);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.field select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+.rail-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 9px 16px;
+  border: 0;
+  border-left: 2px solid transparent;
+  background: none;
+  color: var(--ink-2);
+  font: inherit;
+  font-size: 13.5px;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.rail-item:hover {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+
+.rail-item[aria-current='true'] {
+  background: var(--accent-wash);
+  border-left-color: var(--accent);
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.rail-item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.rail-item .stress-mark {
+  margin-left: auto;
+  color: var(--accent);
+  font-size: 14px;
+}
+
+@media (max-width: 940px) {
+  .bench {
+    grid-template-columns: 1fr;
+  }
+  .rail {
+    position: static;
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+  .rail-group-label {
+    flex: none;
+    justify-content: center;
+    border-top: 0;
+    border-right: 1px solid var(--rule);
+    padding: 10px 14px;
+  }
+  .rail-item {
+    border-left: 0;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+  }
+  .rail-item[aria-current='true'] {
+    border-left: 0;
+    border-bottom-color: var(--accent);
+  }
+}
+
+/* ---------------------------------------------------------- fixture panel */
+
+.panel {
+  border: 1px solid var(--rule);
+  border-radius: var(--r-panel);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.panel-head {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.panel-kicker {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 11.5px;
+  color: var(--ink-3);
+  margin-bottom: 9px;
+}
+
+.panel-head h3 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.panel-note {
+  color: var(--ink-2);
+  font-size: 14.5px;
+  max-width: 68ch;
+}
+
+/* The stress banner. Deliberately not styleable away: it renders above the
+   comparison, states why the case is here, and is the same terracotta as
+   every other functional marker on the page. */
+.stress-banner {
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px;
+  background: var(--accent-wash);
+  border-bottom: 1px solid var(--accent-line);
+}
+
+.stress-banner .icon {
+  color: var(--accent);
+  font-size: 19px;
+  margin-top: 2px;
+}
+
+.stress-banner-title {
+  font-weight: 560;
+  font-size: 14px;
+  color: var(--accent);
+  margin-bottom: 4px;
+  letter-spacing: 0.01em;
+}
+
+.stress-banner p {
+  font-size: 14px;
+  color: var(--ink-2);
+  max-width: 70ch;
+}
+
+/* ------------------------------------------------------------ the compare */
+
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+}
+
+@media (max-width: 780px) {
+  .compare {
+    grid-template-columns: 1fr;
+  }
+}
+
+.variant {
+  background: var(--surface);
+  padding: 20px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.variant-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.variant-name {
+  font-size: 14.5px;
+  font-weight: 560;
+}
+
+.variant-sub {
+  font-size: 12.5px;
+  color: var(--ink-3);
+}
+
+/* The exact string sent to Rime. Mono, selectable, never truncated. */
+.sent-string {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 13.5px;
+  line-height: 1.65;
+  padding: 13px 15px;
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-control);
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  user-select: all;
+}
+
+/* Marks the characters that carry the rewrite, so the diff is visible without
+   a diff view. Terracotta on a wash, same accent as everywhere else. */
+.sent-string mark {
+  background: var(--accent-wash);
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent-line);
+  border-radius: var(--r-chip);
+  padding: 1px 3px;
+  font-weight: 500;
+}
+
+.techniques {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tech-chip {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 11px;
+  padding: 3px 8px;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--r-chip);
+  color: var(--ink-2);
+}
+
+/* ------------------------------------------------------------ clip player */
+
+.player {
+  margin-top: auto;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-control);
+  overflow: hidden;
+}
+
+.player-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+}
+
+.play-btn {
+  width: 36px;
+  height: 36px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-control);
+  border: 1px solid var(--rule-strong);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 15px;
+  transition: background-color 0.14s ease, border-color 0.14s ease;
+}
+
+.play-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.play-btn[data-playing='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.play-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.play-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Real waveform, drawn from the decoded audio buffer, with a playhead driven
+   by the element's real currentTime. Nothing here animates on its own. */
+.wave {
+  flex: 1;
+  min-width: 0;
+  height: 38px;
+  display: block;
+}
+
+.clip-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 0 12px 10px;
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--ink-3);
+}
+
+/* Provenance. Every clip carries one of these and it is never optional. */
+.prov {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 7px;
+  border-radius: var(--r-chip);
+  border: 1px solid var(--rule-strong);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+.prov[data-kind='live'] {
+  border-color: var(--accent-line);
+  background: var(--accent-wash);
+  color: var(--accent);
+}
+
+.prov[data-kind='cached'] {
+  color: var(--ink-2);
+}
+
+.prov[data-kind='none'] {
+  color: var(--ink-3);
+  border-style: dashed;
+}
+
+.clip-empty {
+  padding: 12px;
+  font-size: 13px;
+  color: var(--ink-2);
+  background: var(--surface-2);
+  border: 1px dashed var(--rule-strong);
+  border-radius: var(--r-control);
+  margin-top: auto;
+}
+
+.clip-empty code {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 12.5px;
+  color: var(--ink);
+}
+
+/* --------------------------------------------------- target + the verdict */
+
+.target-row {
+  display: flex;
+  gap: 14px;
+  padding: 18px 24px;
+  border-top: 1px solid var(--rule);
+  background: var(--surface-2);
+  align-items: flex-start;
+}
+
+.target-row > .icon {
+  font-size: 19px;
+  color: var(--accent);
+  margin-top: 3px;
+}
+
+.target-label {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 5px;
+}
+
+.target-value {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 15px;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.verdict-row {
+  padding: 18px 24px;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.verdict-q {
+  font-size: 14px;
+  color: var(--ink-2);
+  margin-right: auto;
+  max-width: 44ch;
+}
+
+.verdict-btns {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.verdict-btn[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: var(--accent-wash);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* ------------------------------------------------------------ live render */
+
+.live-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 32px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .live-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field label {
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.field .help {
+  font-size: 13px;
+  color: var(--ink-2);
+}
+
+.field textarea {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 14px;
+  line-height: 1.65;
+  padding: 13px 15px;
+  min-height: 108px;
+  resize: vertical;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--r-control);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.field textarea::placeholder {
+  color: var(--ink-3);
+}
+
+.field textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+.field-foot {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.counter {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 11.5px;
+  color: var(--ink-3);
+  margin-left: auto;
+}
+
+.counter[data-over='true'] {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.preset-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Runs only while a request is actually in flight. */
+@media (prefers-reduced-motion: no-preference) {
+  .spinning {
+    animation: spin 0.9s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.inline-error {
+  padding: 13px 15px;
+  border: 1px solid var(--accent-line);
+  background: var(--accent-wash);
+  border-radius: var(--r-control);
+  font-size: 13.5px;
+  color: var(--ink);
+}
+
+.inline-error strong {
+  color: var(--accent);
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 560;
+}
+
+.inline-error code {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 12.5px;
+  overflow-wrap: anywhere;
+}
+
+/* ---------------------------------------------------------------- results */
+
+.tally {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 28px;
+  margin-bottom: 36px;
+}
+
+.tally-n {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+}
+
+.tally-k {
+  font-size: 13.5px;
+  color: var(--ink-2);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.log {
+  border: 1px solid var(--rule);
+  border-radius: var(--r-panel);
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.log-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  padding: 12px 18px;
+  font-size: 13.5px;
+}
+
+.log-row + .log-row {
+  border-top: 1px solid var(--rule);
+}
+
+.log-row .id {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 12.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-wrap: anywhere;
+}
+
+.log-row .dur {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 12.5px;
+  color: var(--ink-2);
+}
+
+.log-row .vd {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+.log-row .vd[data-set='true'] {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.log-row .vd[data-set='false'] {
+  color: var(--ink-3);
+}
+
+@media (max-width: 700px) {
+  .log-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}
+
+/* ----------------------------------------------------------------- footer */
+
+footer {
+  border-top: 1px solid var(--rule);
+  padding-block: 44px 56px;
+  color: var(--ink-2);
+  font-size: 14px;
+}
+
+.foot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 32px;
+}
+
+.foot-h {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 12px;
+}
+
+.foot-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 7px;
+  font-size: 13.5px;
+}
+
+.skip {
+  position: absolute;
+  left: -9999px;
+}
+
+.skip:focus {
+  left: 16px;
+  top: 12px;
+  z-index: 40;
+  padding: 9px 14px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-radius: var(--r-control);
+}
+
+.loading-note {
+  padding: 40px 0;
+  color: var(--ink-3);
+  font-size: 14px;
+}

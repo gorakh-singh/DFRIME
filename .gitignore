@@ -1,0 +1,28 @@
+# The API key lives here and must never be committed.
+.env
+.env.local
+
+# Listening verdicts recorded through the UI. These belong to whoever ran the
+# demo, not to the repository, and a committed set would look like a result the
+# project is asserting rather than one a reader produced.
+verdicts.json
+
+# public/state.json IS committed. It is the frozen run state a static deploy
+# reads instead of /api/state, and without it a Pages deployment cannot load.
+
+node_modules/
+.DS_Store
+
+# NOTE ON public/clips/*.wav
+#
+# The rendered audio IS committed, deliberately, and it is about 8 MB.
+#
+# An earlier version of this file ignored it, on the reasoning that the fixture
+# list and the generate script are the source of truth and the wav files are
+# only output. That reasoning is right for a library and wrong here. A judge
+# opening the deployed site with no API key would get "not rendered" on every
+# clip and no way to hear anything, which would make the deployment useless.
+#
+# The manifest records a sha of the text and a sha of the audio for each clip,
+# and the server refuses to play any clip whose text no longer matches, so a
+# committed clip cannot silently drift away from the string shown beside it.
