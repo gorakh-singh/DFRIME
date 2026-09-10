@@ -6,6 +6,10 @@ Built for the DataForge x Rime hackathon. Hard voice problem selected: **pronunc
 
 ---
 
+## Live-Site-Link : https://dfrime.onrender.com/
+
+## Github Repo Link : https://github.com/gorakh-singh/DFRIME
+
 ## The problem, and why voice is load-bearing
 
 The user is an operations team running outbound automated calls: order confirmations, appointment reminders, delivery updates. Every call carries variable data pulled from a database, and that data is the entire reason for the call.
